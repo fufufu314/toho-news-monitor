@@ -11,6 +11,9 @@ jobs:
     permissions:
       contents: write    # リポジトリへの書き込み権限を付与
 
+    env:
+      TZ: 'Asia/Tokyo'
+      
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
