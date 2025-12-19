@@ -44,11 +44,19 @@ def main():
             old_content = f.read()
 
     if current_content != old_content:
-        print("差分を検知しました。")
+        print("差分を検知！")
+        # 1. 履歴ログに詳細を追記
+        with open(LOG_FILE, "a", encoding="utf-8") as f:
+            f.write(f"[{now}] 変更を検知しました\n")
+        
+        # 2. 最新の状態を上書き保存
         with open(SAVE_FILE, "w", encoding="utf-8") as f:
             f.write(current_content)
     else:
-        print("変更はありません。")
+        print("変更なし")
+        # 変更がなくても実行記録だけ残したい場合はここに追加
+        with open(LOG_FILE, "a", encoding="utf-8") as f:
+            f.write(f"[{now}] チェック完了（変更なし）\n")
 
 if __name__ == "__main__":
     main()
