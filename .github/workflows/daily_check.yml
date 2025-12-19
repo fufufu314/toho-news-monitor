@@ -5,7 +5,7 @@ on:
     branches:
       - main
   schedule:
-    - cron: '17 2 * * *'  # 日本時間 11:17 に設定（キリの悪い数字にする）
+    - cron: '42 2 * * *'  # 日本時間 11:17 に設定（キリの悪い数字にする）
   workflow_dispatch:      # 手動実行ボタンも追加
 
 jobs:
