@@ -32,6 +32,8 @@ jobs:
           pip install -r requirements.txt
 
       - name: Run monitor script
+        env:
+          IFTTT_KEY: ${{ secrets.IFTTT_KEY }} # これを追加
         run: python monitor.py
 
       - name: Commit and Push changes
