@@ -8,7 +8,7 @@
   {
     "name": "グラシネ池袋",
     "url": "https://www.cinemasunshine.co.jp/theater/gdcs/news/57/",
-    "tag": "section",
-    "class": "news-detail"
+    "tag": "div",
+    "class": "news_detail"
   }
 ]
