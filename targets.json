@@ -1,0 +1,14 @@
+[
+  {
+    "name": "TOHO上野",
+    "url": "https://hlo.tohotheater.jp/net/schedule/076/TNPI2000J01.do",
+    "tag": "section",
+    "class": "news"
+  },
+  {
+    "name": "グラシネ池袋",
+    "url": "https://www.cinemasunshine.co.jp/theater/gdcs/news/57/",
+    "tag": "div",
+    "class": "markdown"
+  }
+]
