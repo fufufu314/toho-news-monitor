@@ -40,6 +40,6 @@ jobs:
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-          git add last_news.txt diff_history.log
+          git add last_*.txt diff_history.log  # すべての保存ファイルを対象にする
           git commit -m "chore: update news content [skip ci]" || echo "No changes to commit"
           git push
