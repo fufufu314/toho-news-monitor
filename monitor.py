@@ -18,13 +18,11 @@ def fetch_content(site):
     try:
         print(f"--- 巡回開始: {site['name']} ---")
         
-        # URLとフォーマットの決定
         target_url = site['url']
         is_payload = False
 
         if site.get('format') == 'sunshine_payload':
             is_payload = True
-            # HTMLから最新JSパスを抽出
             res_html = requests.get(target_url, headers=headers, timeout=15)
             js_match = re.search(r'/_nuxt/static/[\d]+/theater/gdcs/news/57/payload\.js', res_html.text)
             if js_match:
@@ -39,10 +37,28 @@ def fetch_content(site):
             print(f"  [!] アクセス失敗 (Status: {response.status_code})")
             return None
 
-        # 抽出ロジック
+        # --- 修正箇所 ---
         if is_payload or site.get('format') == 'js_payload':
             match = re.search(r'news:\{(.*?)\}', response.text, re.DOTALL)
-            return match.group(0) if match else None
+            if match:
+                raw_text = match.group(0)
+                try:
+                    # Unicodeエスケープ（\uXXXX）を日本語に変換
+                    # 一旦latin-1でエンコードしてからunicode-escapeでデコードするのが定石です
+                    decoded_text = raw_text.encode('utf-16', 'surrogatepass').decode('utf-16')
+                    # もし上記でダメな場合はこちらを試す:
+                    # decoded_text = raw_text.encode('utf-8').decode('unicode-escape')
+                    
+                    # 簡易的な変換（正規表現で \uXXXX を置換）
+                    decoded_text = re.sub(r'\\u([0-9a-fA-F]{4})', lambda m: chr(int(m.group(1), 16)), raw_text)
+                    
+                    return decoded_text
+                except Exception as e:
+                    print(f"  [!] デコード失敗: {e}")
+                    return raw_text # 失敗したら生データのまま返す
+            return None
+        # --- 修正箇所ここまで ---
+        
         else:
             response.encoding = response.apparent_encoding 
             soup = BeautifulSoup(response.text, "html.parser")
