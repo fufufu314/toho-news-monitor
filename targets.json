@@ -5,9 +5,9 @@
     "tag": "section",
     "class": "news"
   },
-  {
+　{
     "name": "グラシネ池袋",
-    "url": "https://www.cinemasunshine.co.jp/_nuxt/static/1766563931/theater/gdcs/news/57/payload.js",
-    "format": "js_payload"
+    "url": "https://www.cinemasunshine.co.jp/theater/gdcs/news/57/",
+    "format": "sunshine_payload"
   }
 ]
