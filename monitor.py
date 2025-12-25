@@ -37,13 +37,21 @@ def fetch_content(site):
             match = re.search(r'news:\{(.*?)\}', response.text, re.DOTALL)
             if match:
                 raw_text = match.group(0)
-                # 文字化け修復
                 try:
                     fixed_text = raw_text.encode('latin-1').decode('utf-8')
                 except:
                     fixed_text = raw_text
-                # HTMLタグ除去
-                return BeautifulSoup(fixed_text, "html.parser").get_text("\n", strip=True)
+
+                # 特定のコードを改行に変換
+                fixed_text = fixed_text.replace(r'\u003Cp\u003E', '\n')
+                fixed_text = fixed_text.replace(r'\u003C\u002Fp\u003E', '\n')
+                fixed_text = fixed_text.replace(r'\u003Cbr\u003E', '\n')
+                fixed_text = fixed_text.replace('&nbsp;', ' ')
+                
+                # タグ除去と改行整理
+                clean_text = BeautifulSoup(fixed_text, "html.parser").get_text(strip=True)
+                clean_text = re.sub(r'\n+', '\n', clean_text)
+                return clean_text
             return None
         else:
             response.encoding = response.apparent_encoding 
