@@ -17,7 +17,6 @@ def fetch_content(site):
     headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"}
     try:
         print(f"--- 巡回開始: {site['name']} ---")
-        
         target_url = site['url']
         is_payload = False
 
@@ -29,36 +28,23 @@ def fetch_content(site):
                 target_url = "https://www.cinemasunshine.co.jp" + js_match.group(0)
                 print(f"  [→] 最新パス取得: {target_url}")
             else:
-                print("  [!] payload.jsのパス特定に失敗しました")
                 return None
 
         response = requests.get(target_url, headers=headers, timeout=15)
-        if response.status_code != 200:
-            print(f"  [!] アクセス失敗 (Status: {response.status_code})")
-            return None
+        if response.status_code != 200: return None
 
-        # --- 修正箇所 ---
         if is_payload or site.get('format') == 'js_payload':
             match = re.search(r'news:\{(.*?)\}', response.text, re.DOTALL)
             if match:
                 raw_text = match.group(0)
+                # 文字化け修復
                 try:
-                    # Unicodeエスケープ（\uXXXX）を日本語に変換
-                    # 一旦latin-1でエンコードしてからunicode-escapeでデコードするのが定石です
-                    decoded_text = raw_text.encode('utf-16', 'surrogatepass').decode('utf-16')
-                    # もし上記でダメな場合はこちらを試す:
-                    # decoded_text = raw_text.encode('utf-8').decode('unicode-escape')
-                    
-                    # 簡易的な変換（正規表現で \uXXXX を置換）
-                    decoded_text = re.sub(r'\\u([0-9a-fA-F]{4})', lambda m: chr(int(m.group(1), 16)), raw_text)
-                    
-                    return decoded_text
-                except Exception as e:
-                    print(f"  [!] デコード失敗: {e}")
-                    return raw_text # 失敗したら生データのまま返す
+                    fixed_text = raw_text.encode('latin-1').decode('utf-8')
+                except:
+                    fixed_text = raw_text
+                # HTMLタグ除去
+                return BeautifulSoup(fixed_text, "html.parser").get_text("\n", strip=True)
             return None
-        # --- 修正箇所ここまで ---
-        
         else:
             response.encoding = response.apparent_encoding 
             soup = BeautifulSoup(response.text, "html.parser")
@@ -67,7 +53,6 @@ def fetch_content(site):
             if 'id' in site: find_args['id'] = site['id']
             target_section = soup.find(**find_args)
             return target_section.get_text("\n", strip=True) if target_section else None
-
     except Exception as e:
         print(f"  [!] エラー: {e}")
         return None
