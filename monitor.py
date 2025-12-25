@@ -42,15 +42,18 @@ def fetch_content(site):
                 except:
                     fixed_text = raw_text
 
-                # 特定のコードを改行に変換
+                # 特殊文字の復元とタグの無効化
                 fixed_text = fixed_text.replace(r'\u003Cp\u003E', '\n')
-                fixed_text = fixed_text.replace(r'\u003C\u002Fp\u003E', '\n')
                 fixed_text = fixed_text.replace(r'\u003Cbr\u003E', '\n')
+                fixed_text = fixed_text.replace(r'\u003C', '<')
+                fixed_text = fixed_text.replace(r'\u003E', '>')
+                fixed_text = fixed_text.replace(r'\u002F', '/')
                 fixed_text = fixed_text.replace('&nbsp;', ' ')
                 
-                # タグ除去と改行整理
-                clean_text = BeautifulSoup(fixed_text, "html.parser").get_text(strip=True)
-                clean_text = re.sub(r'\n+', '\n', clean_text)
+                # タグ除去と整形
+                soup_data = BeautifulSoup(fixed_text, "html.parser")
+                clean_text = soup_data.get_text(strip=True)
+                clean_text = re.sub(r'\n\s*\n+', '\n', clean_text)
                 return clean_text
             return None
         else:
