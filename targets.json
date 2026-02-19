@@ -6,6 +6,18 @@
     "class": "news"
   },
   {
+    "name": "TOHO池袋",
+    "url": "https://hlo.tohotheater.jp/net/schedule/084/TNPI2000J01.do",
+    "tag": "section",
+    "class": "news"
+  },
+  {
+    "name": "TOHO日比谷",
+    "url": "https://hlo.tohotheater.jp/net/schedule/081/TNPI2000J01.do",
+    "tag": "section",
+    "class": "news"
+  },
+  {
     "name": "グラシネ池袋",
     "url": "https://www.cinemasunshine.co.jp/theater/gdcs/news/57/",
     "format": "sunshine_payload"
