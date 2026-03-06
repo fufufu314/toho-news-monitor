@@ -1,6 +1,12 @@
 [
   {
     "name": "TOHO上野",
+    "url": "https://hlo.tohotheater.jp/net/schedule/080/TNPI2000J01.do",
+    "tag": "section",
+    "class": "news"
+  },
+  {
+    "name": "TOHO新宿",
     "url": "https://hlo.tohotheater.jp/net/schedule/076/TNPI2000J01.do",
     "tag": "section",
     "class": "news"
@@ -14,6 +20,30 @@
   {
     "name": "TOHO日比谷",
     "url": "https://hlo.tohotheater.jp/net/schedule/081/TNPI2000J01.do",
+    "tag": "section",
+    "class": "news"
+  },
+  {
+    "name": "TOHO日本橋",
+    "url": "https://hlo.tohotheater.jp/net/schedule/073/TNPI2000J01.do",
+    "tag": "section",
+    "class": "news"
+  },
+  {
+    "name": "TOHO六本木",
+    "url": "https://hlo.tohotheater.jp/net/schedule/009/TNPI2000J01.do",
+    "tag": "section",
+    "class": "news"
+  },
+  {
+    "name": "TOHO渋谷",
+    "url": "https://hlo.tohotheater.jp/net/schedule/043/TNPI2000J01.do",
+    "tag": "section",
+    "class": "news"
+  },
+  {
+    "name": "TOHO錦糸町",
+    "url": "https://hlo.tohotheater.jp/net/schedule/029/TNPI2000J01.do",
     "tag": "section",
     "class": "news"
   },
